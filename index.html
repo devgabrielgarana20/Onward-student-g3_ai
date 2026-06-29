@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5" />
+    <title>Bloco de Estudos - Caderno</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+        <div class="header-left">
+            <button class="menu-btn" id="menuToggle" aria-label="Abrir menu">
+                <i class="fas fa-ellipsis-v"></i>
+            </button>
+            <div class="img_soon-1">
+                <img src="img/soon_small/not_soon.png" >
+                <span>Memori</span>
+            </div>
+        </div>
+        <h1 class="header-title" id="mainTitle"> </h1>   
+        <div class="header-right">
+            <button class="btn-icon" id="addNotebookBtn" aria-label="Novo bloco">
+                <i class="fas fa-plus-circle"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- ===== MENU LATERAL ===== -->
+    <nav class="drawer" id="drawer">
+        <div class="drawer-header">
+            <div class="dev-logo">
+                <i class="fas fa-laptop-code"></i>
+                <span>Guarani tech</span>
+            </div>
+            <button class="close-drawer" id="closeDrawer">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <ul class="drawer-menu">
+            <li id="drawerConfig">
+                <i class="fas fa-cog"></i>
+                <span>Configurações</span>
+                <small>em breve</small>
+            </li>
+            <li id="drawerExport">
+                <i class="fas fa-file-export"></i>
+                <span>Exportar dados</span>
+            </li>
+            <li id="drawerImport">
+                <i class="fas fa-file-import"></i>
+                <span>Importar dados</span>
+            </li>
+            <li id="drawerRedirect">
+                <i class="fas fa-external-link-alt"></i>
+                <span>Ir para outra página</span>
+            </li>
+            <li id="drawerAbout">
+                <i class="fas fa-info-circle"></i>
+                <span>Sobre</span>
+            </li>
+        </ul>
+        <div class="drawer-footer">
+            <small>v2.0.0</small>
+        </div>
+    </nav>
+    <div class="overlay" id="overlay"></div>
+
+    <!-- ===== TELA PRINCIPAL (LISTA) ===== -->
+    <main class="container" id="listView">
+        <!-- Barra de ferramentas -->
+        <div class="toolbar">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Buscar blocos..." />
+            </div>
+            <div class="sort-options">
+                <label for="sortSelect"><i class="fas fa-sort"></i></label>
+                <select id="sortSelect">
+                    <option value="date-desc">Data (mais recente)</option>
+                    <option value="date-asc">Data (mais antiga)</option>
+                    <option value="title-asc">Título (A-Z)</option>
+                    <option value="title-desc">Título (Z-A)</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Grid de blocos -->
+        <section class="notes-list">
+            <div id="notesContainer" class="notes-grid">
+                <!-- Cards serão inseridos via JS -->
+            </div>
+        </section>
+    </main>
+
+    <!-- ===== TELA DO CADERNO (tela cheia) ===== -->
+    <section class="notebook-screen" id="notebookView" style="display:none;">
+        <div class="notebook-header">
+            <button class="btn-back" id="backToList"><i class="fas fa-arrow-left"></i> Voltar</button>
+            <div class="notebook-info">
+                <h2 id="notebookTitle">Título do Bloco</h2>
+                <span id="notebookDate">Data</span>
+            </div>
+            <button class="btn-save" id="saveNotebook"><i class="fas fa-save"></i> Salvar</button>
+        </div>
+        <div class="notebook-paper">
+            <textarea id="notebookContent" placeholder="Escreva aqui o que você estudou..."></textarea>
+        </div>
+        <!-- Opcional: rodapé com contagem de palavras -->
+        <div class="notebook-footer">
+            <span id="wordCount">0 palavras</span>
+        </div>
+    </section>
+
+    <!-- ===== MODAL CRIAR/EDITAR BLOCO ===== -->
+    <div class="modal" id="notebookModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <h2 id="modalTitle">Novo Bloco</h2>
+            <form id="notebookForm">
+                <input type="hidden" id="editId" />
+                <div class="form-group">
+                    <label for="modalTitleInput">Título *</label>
+                    <input type="text" id="modalTitleInput" required placeholder="Ex: Matemática - Capítulo 3" />
+                </div>
+                <div class="form-group">
+                    <label for="modalDescription">Descrição</label>
+                    <input type="text" id="modalDescription" placeholder="Breve descrição" />
+                </div>
+                <div class="form-group">
+                    <label for="modalDate">Data de estudo *</label>
+                    <input type="date" id="modalDate" required />
+                </div>
+                <button type="submit" class="btn-primary">
+                    <i class="fas fa-save"></i> <span id="modalSubmitText">Criar</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===== MODAL SOBRE ===== -->
+    <div class="modal" id="aboutModal">
+        <div class="modal-content small-modal">
+            <span class="close-modal" id="closeAbout">&times;</span>
+            <h2><i class="fas fa-info-circle"></i> Sobre</h2>
+            <p><strong>Bloco de Estudos v2.0</strong></p>
+            <p>App de memorização para estudantes.</p>
+            <p>Desenvolvido com ❤️ por <strong>DevNote</strong></p>
+            <p><i class="fas fa-code"></i> HTML, CSS e JavaScript puro</p>
+        </div>
+    </div>
+
+    <!-- ===== INPUT OCULTO PARA IMPORTAR ===== -->
+    <input type="file" id="importFileInput" accept=".json" style="display:none;" />
+
+    <script src="script.js"></script>
+</body>
+</html>
